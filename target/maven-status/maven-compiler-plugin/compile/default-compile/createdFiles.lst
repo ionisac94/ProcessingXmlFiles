@@ -1,0 +1,16 @@
+org\example\ServletInitializer.class
+org\example\web\ParserController.class
+org\example\ProductType.class
+org\example\service\ParsingXmlImp.class
+org\example\helper\HelperParserXML.class
+org\example\Main.class
+org\example\service\ParsingXml.class
+org\example\web\StatusController.class
+org\example\PriceType.class
+org\example\OrdersType.class
+org\example\domain\Price.class
+org\example\domain\Order.class
+org\example\domain\Product.class
+org\example\OrderType.class
+org\example\ObjectFactory.class
+org\example\domain\Orders.class

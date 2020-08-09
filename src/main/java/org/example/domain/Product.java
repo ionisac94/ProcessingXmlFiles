@@ -60,4 +60,14 @@ public class Product implements Serializable {
 	public Price getPrice() {
 		return price;
 	}
+
+	@Override
+	public String toString() {
+		return "Product{" +
+				"description='" + description + '\'' +
+				", gtin='" + gtin + '\'' +
+				", price=" + price +
+				", supplier='" + supplier + '\'' +
+				'}';
+	}
 }

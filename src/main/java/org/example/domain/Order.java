@@ -47,4 +47,13 @@ public class Order implements Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
+
+	@Override
+	public String toString() {
+		return "Order{" +
+				"product=" + product +
+				", created=" + created +
+				", id='" + id + '\'' +
+				'}';
+	}
 }

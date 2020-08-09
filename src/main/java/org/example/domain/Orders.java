@@ -19,4 +19,11 @@ public class Orders implements Serializable {
 	public List<Order> getOrderList() {
 		return orderList;
 	}
+
+	@Override
+	public String toString() {
+		return "Orders{" +
+				"orderList=" + orderList +
+				'}';
+	}
 }

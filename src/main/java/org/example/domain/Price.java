@@ -36,4 +36,12 @@ public class Price {
 	public String getValue() {
 		return value;
 	}
+
+	@Override
+	public String toString() {
+		return "Price{" +
+				"value='" + value + '\'' +
+				", currency='" + currency + '\'' +
+				'}';
+	}
 }
