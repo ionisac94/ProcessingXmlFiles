@@ -30,19 +30,20 @@ public class HelperParserXML {
 
 	public void parseXml() throws Exception {
 
-		File xmlFile = new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\parserXML\\orders.xml");// only for test purpose..this path should no be hardcoded
-		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-		Document doc = dBuilder.parse(xmlFile);
-		doc.getDocumentElement().normalize();
+		File xmlFile = new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\parserXML\\orders.xml");// only for test purpose..this path should no be hardcoded!!!
+		DocumentBuilderFactory dFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder = dFactory.newDocumentBuilder();
+		Document document = dBuilder.parse(xmlFile);
+		document.getDocumentElement().normalize();
 
-		String idNode = doc.getElementsByTagName("order").item(1).getAttributes().getNamedItem("ID").getNodeValue();
+		String idNode = document.getElementsByTagName("order").item(1).getAttributes().getNamedItem("ID").getNodeValue();
+		String substringNode = idNode.substring(0, idNode.length() - 2);
 
-		dbFactory.setNamespaceAware(true);
-		XPathFactory xfactory = XPathFactory.newInstance();
-		XPath xpath = xfactory.newXPath();
-		XPathExpression allProductsExpression = xpath.compile("//orders/order/product/supplier/text()");
-		NodeList productNodes = (NodeList) allProductsExpression.evaluate(doc, XPathConstants.NODESET);
+		dFactory.setNamespaceAware(true);
+		XPathFactory xFactory = XPathFactory.newInstance();
+		XPath xPath = xFactory.newXPath();
+		XPathExpression allProductsExpression = xPath.compile("//orders/order/product/supplier/text()");
+		NodeList productNodes = (NodeList) allProductsExpression.evaluate(document, XPathConstants.NODESET);
 
 		List<String> supplierNames = new ArrayList<>();
 
@@ -54,13 +55,11 @@ public class HelperParserXML {
 
 		LOGGER.info("Found suppliers for parsing: " + supplierNames);
 
-
 		for (String supplier : supplierNames) {
 			String xpathQuery = "/orders/order/product[supplier='" + supplier + "']";
-			xpath = xfactory.newXPath();
-			XPathExpression query = xpath.compile(xpathQuery);
-			NodeList productNodesFiltered = (NodeList) query.evaluate(doc, XPathConstants.NODESET);
-
+			xPath = xFactory.newXPath();
+			XPathExpression query = xPath.compile(xpathQuery);
+			NodeList productNodesFiltered = (NodeList) query.evaluate(document, XPathConstants.NODESET);
 
 			Document suppXml = dBuilder.newDocument();
 
@@ -69,7 +68,6 @@ public class HelperParserXML {
 
 			for (int i = 0; i < productNodesFiltered.getLength(); i++) {
 				Node productNode = productNodesFiltered.item(i);
-//
 				Node clonedNode = productNode.cloneNode(true);
 				suppXml.adoptNode(clonedNode);
 				rootElement.appendChild(clonedNode);
@@ -79,7 +77,7 @@ public class HelperParserXML {
 			Transformer transformer = transformerFactory.newTransformer();
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			DOMSource source = new DOMSource(suppXml);
-			StreamResult result = new StreamResult(new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\parserXML\\orders.xml" + supplier + idNode + ".xml"));
+			StreamResult result = new StreamResult(new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\parserXML\\" + supplier + substringNode + ".xml"));
 			transformer.transform(source, result);
 
 			LOGGER.info("Done for supplier: " + supplier);
