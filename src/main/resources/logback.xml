@@ -13,7 +13,7 @@
 		<appender-ref ref="CONSOLE"/>
 	</root>
 
-	<logger name="com.md.demo" level="INFO" additivity="false">
+	<logger name="org.example" level="INFO" additivity="false">
 		<appender-ref ref="CONSOLE"/>
 	</logger>
 
